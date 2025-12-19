@@ -1,3 +1,3 @@
-upload demo video for the application
+Demo video for the Project.
 
-https://github.com/Sanch-09/travelPlanner/issues/1#issue-3747773244
+https://github.com/user-attachments/assets/1dec1233-a9b8-4e02-982d-c91e29ee38b6
