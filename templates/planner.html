@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Travel Planner - PlanTrip.AI</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <a href="{{ url_for('index') }}" class="logo">🌍 PlanTrip.AI</a>
+            <div class="nav-links">
+                <a href="{{ url_for('index') }}">Home</a>
+                <a href="{{ url_for('planner_page') }}" class="active">Planner</a>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container planner-container">
+        <!-- Header -->
+        <header class="planner-header">
+            <h1 class="title animate-fade-in">✈️ AI-Powered Travel Planner</h1>
+            <p class="subtitle animate-fade-in-delay">Plan your dream trip with AI! Get personalized recommendations for flights, hotels, and activities.</p>
+        </header>
+
+        <!-- Main Content -->
+        <main class="planner-main">
+            <!-- Left Sidebar -->
+            <aside class="sidebar">
+                <h2>🌎 Travel Assistant</h2>
+                
+                <div class="sidebar-section">
+                    <h3>Personalize Your Trip</h3>
+                    <div class="form-group">
+                        <label>💰 Budget Preference:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="budget" value="Economy" checked> Economy</label>
+                            <label><input type="radio" name="budget" value="Standard"> Standard</label>
+                            <label><input type="radio" name="budget" value="Luxury"> Luxury</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>✈️ Flight Class:</label>
+                        <div class="radio-group">
+                            <label><input type="radio" name="flight_class" value="Economy" checked> Economy</label>
+                            <label><input type="radio" name="flight_class" value="Business"> Business</label>
+                            <label><input type="radio" name="flight_class" value="First Class"> First Class</label>
+                        </div>
+                    </div>
+                    
+                    <div class="form-group">
+                        <label>🏨 Preferred Hotel Rating:</label>
+                        <select id="hotel_rating" name="hotel_rating">
+                            <option value="Any">Any</option>
+                            <option value="3⭐">3⭐</option>
+                            <option value="4⭐">4⭐</option>
+                            <option value="5⭐">5⭐</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>🎒 Packing Checklist</h3>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" name="packing" value="Clothes" checked> 👕 Clothes</label>
+                        <label><input type="checkbox" name="packing" value="Footwear" checked> 🩴 Comfortable Footwear</label>
+                        <label><input type="checkbox" name="packing" value="Sunglasses"> 🕶️ Sunglasses & Sunscreen</label>
+                        <label><input type="checkbox" name="packing" value="Guidebook"> 📖 Travel Guidebook</label>
+                        <label><input type="checkbox" name="packing" value="Medications" checked> 💊 Medications & First-Aid</label>
+                    </div>
+                </div>
+
+                <div class="sidebar-section">
+                    <h3>🛂 Travel Essentials</h3>
+                    <div class="checkbox-group">
+                        <label><input type="checkbox" id="visa_required" name="essentials" value="visa"> 🛃 Check Visa Requirements</label>
+                        <label><input type="checkbox" id="travel_insurance" name="essentials" value="insurance"> 🛡️ Get Travel Insurance</label>
+                        <label><input type="checkbox" id="currency_converter" name="essentials" value="currency"> 💱 Currency Exchange Rates</label>
+                    </div>
+                </div>
+            </aside>
+
+            <!-- Main Form -->
+            <div class="main-content">
+                <form id="travelForm">
+                    <div class="form-section">
+                        <h2>🌍 Where are you headed?</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>🛫 Departure City (IATA Code):</label>
+                                <input type="text" id="source" name="source" value="BOM" required>
+                            </div>
+                            <div class="form-group">
+                                <label>🛬 Destination (IATA Code):</label>
+                                <input type="text" id="destination" name="destination" value="DEL" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section">
+                        <h2>📅 Plan Your Adventure</h2>
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>🕒 Trip Duration (days): <span id="num_days_value">5</span></label>
+                                <input type="range" id="num_days" name="num_days" min="1" max="14" value="5" class="slider">
+                            </div>
+                            <div class="form-group">
+                                <label>🎭 Select Your Travel Theme:</label>
+                                <select id="travel_theme" name="travel_theme">
+                                    <option value="💑 Couple Getaway">💑 Couple Getaway</option>
+                                    <option value="👨‍👩‍👧‍👦 Family Vacation">👨‍👩‍👧‍👦 Family Vacation</option>
+                                    <option value="🏔️ Adventure Trip" selected>🏔️ Adventure Trip</option>
+                                    <option value="🧳 Solo Exploration">🧳 Solo Exploration</option>
+                                </select>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>🌍 What activities do you enjoy? (e.g., relaxing on the beach, exploring historical sites, nightlife, adventure)</label>
+                            <textarea id="activity_preferences" name="activity_preferences" rows="3">Relaxing on the beach, exploring historical sites</textarea>
+                        </div>
+
+                        <div class="form-row">
+                            <div class="form-group">
+                                <label>Departure Date:</label>
+                                <input type="date" id="departure_date" name="departure_date" required>
+                            </div>
+                            <div class="form-group">
+                                <label>Return Date:</label>
+                                <input type="date" id="return_date" name="return_date" required>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="form-section highlight-box" id="preview-box" style="display: none;">
+                        <h3 id="preview-text"></h3>
+                        <p>Let's find the best flights, stays, and experiences for your unforgettable journey.</p>
+                    </div>
+
+                    <button type="submit" id="generateBtn" class="btn-primary">
+                        <span class="btn-text">🚀 Generate Travel Plan</span>
+                        <span class="btn-loader" style="display: none;"></span>
+                    </button>
+                </form>
+
+                <!-- Results Section -->
+                <div id="results" class="results-section" style="display: none;">
+                    <!-- Loading Spinner -->
+                    <div id="loading" class="loading" style="display: none;">
+                        <div class="spinner"></div>
+                        <p id="loading-text">Generating your travel plan...</p>
+                    </div>
+
+                    <!-- Flights Section -->
+                    <div id="flights-section" class="result-section">
+                        <h2>✈️ Cheapest Flight Options</h2>
+                        <div id="flights-container" class="flights-container"></div>
+                    </div>
+
+                    <!-- Hotels & Restaurants Section -->
+                    <div id="hotels-section" class="result-section">
+                        <h2>🏨 Hotels & Restaurants</h2>
+                        <div id="hotels-container" class="content-box"></div>
+                    </div>
+
+                    <!-- Itinerary Section -->
+                    <div id="itinerary-section" class="result-section">
+                        <h2>🗺️ Your Personalized Itinerary</h2>
+                        <div id="itinerary-container" class="content-box"></div>
+                    </div>
+
+                    <!-- Errors Section -->
+                    <div id="errors-section" class="error-section" style="display: none;">
+                        <h3>⚠️ Warnings</h3>
+                        <div id="errors-container"></div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='js/planner.js') }}"></script>
+</body>
+</html>
+
